@@ -1,0 +1,35 @@
+{
+  "name": "quasar-amplify-photos",
+  "version": "0.0.1",
+  "description": "A Quasar and Amplify Framework App",
+  "productName": "Quasar Amplify Photos",
+  "cordovaId": "org.cordova.quasar.app",
+  "capacitorId": "",
+  "author": "Tim Cheung <cheungt@amazon.com>",
+  "private": true,
+  "scripts": {
+    "test": "echo \"No test specified\" && exit 0"
+  },
+  "dependencies": {
+    "@quasar/extras": "^1.0.0",
+    "aws-amplify": "^1.2.4",
+    "aws-amplify-vue": "^0.3.3",
+    "aws-appsync": "^3.0.2",
+    "axios": "^0.18.1",
+    "graphql": "^14.5.8",
+    "graphql-tag": "^2.10.1",
+    "quasar": "^1.0.0",
+    "vue-apollo": "^3.0.0"
+  },
+  "devDependencies": {
+    "@quasar/app": "^1.0.0"
+  },
+  "engines": {
+    "node": ">= 8.9.0",
+    "npm": ">= 5.6.0",
+    "yarn": ">= 1.6.0"
+  },
+  "browserslist": [
+    "last 1 version, not dead, ie >= 11"
+  ]
+}
