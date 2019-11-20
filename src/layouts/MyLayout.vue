@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header>
       <q-toolbar>
         <q-btn
           flat
@@ -11,78 +11,80 @@
           aria-label="Menu"
         />
 
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+        <q-btn
+          to="/auth"
+          flat
+          icon-right="account_circle"
+          label="Login"
+          class="absolute-right" />
       </q-toolbar>
+      <q-img
+        src="statics/hotairballoon.jpg"
+        class="header-image absolute-top" />
     </q-header>
 
     <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-      content-class="bg-grey-2"
-    >
-      <q-list>
-        <q-item-label header>Essential Links</q-item-label>
-        <q-item clickable tag="a" target="_blank" href="https://quasar.dev">
-          <q-item-section avatar>
-            <q-icon name="school" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Docs</q-item-label>
-            <q-item-label caption>quasar.dev</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://github.quasar.dev">
-          <q-item-section avatar>
-            <q-icon name="code" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Github</q-item-label>
-            <q-item-label caption>github.com/quasarframework</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://chat.quasar.dev">
-          <q-item-section avatar>
-            <q-icon name="chat" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Discord Chat Channel</q-item-label>
-            <q-item-label caption>chat.quasar.dev</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://forum.quasar.dev">
-          <q-item-section avatar>
-            <q-icon name="record_voice_over" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Forum</q-item-label>
-            <q-item-label caption>forum.quasar.dev</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://twitter.quasar.dev">
-          <q-item-section avatar>
-            <q-icon name="rss_feed" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Twitter</q-item-label>
-            <q-item-label caption>@quasarframework</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable tag="a" target="_blank" href="https://facebook.quasar.dev">
-          <q-item-section avatar>
-            <q-icon name="public" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Facebook</q-item-label>
-            <q-item-label caption>@QuasarFramework</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </q-drawer>
+        v-model="leftDrawerOpen"
+        show-if-above
+        :width="250"
+        :breakpoint="400"
+      >
+        <q-scroll-area
+          style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
+          <q-list padding>
+            <q-item
+            to="/"
+            exact
+            clickable
+            v-ripple>
+              <q-item-section avatar>
+                <q-icon name="photo" />
+              </q-item-section>
+
+              <q-item-section>
+                Photos
+              </q-item-section>
+            </q-item>
+            <q-item
+              to="/albums"
+              exact
+              clickable
+              v-ripple>
+              <q-item-section avatar>
+                <q-icon name="album" />
+              </q-item-section>
+
+              <q-item-section>
+                Albums
+              </q-item-section>
+            </q-item>
+            <q-item
+              to="/settings"
+              exact
+              clickable
+              v-ripple>
+              <q-item-section avatar>
+                <q-icon name="settings" />
+              </q-item-section>
+
+              <q-item-section>
+                Settings
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-scroll-area>
+
+        <q-img class="absolute-top" src="statics/hotairballoon.jpg" style="height: 150px">
+          <div
+            class="absolute-bottom bg-transparent"
+            v-if="isLoggedIn">
+            <q-avatar size="56px" class="q-mb-sm">
+              <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+            </q-avatar>
+            <div class="text-weight-bold">{{ user.username }}</div>
+          </div>
+        </q-img>
+      </q-drawer>
 
     <q-page-container>
       <router-view />
@@ -94,10 +96,28 @@
 export default {
   name: 'MyLayout',
 
-  data () {
+  data() {
     return {
-      leftDrawerOpen: false
-    }
+      leftDrawerOpen: false,
+      signedIn: false,
+    };
+  },
+  beforeCreate () {
+    this.$Auth.currentAuthenticatedUser()
+      .then(user => {
+        this.user = user
+        this.signedIn = true
+      })
+      .catch(() => console.log('not signed in...'))
   }
-}
+};
 </script>
+
+<style lang="scss">
+  .header-image {
+    height: 100%;
+    z-index: -1;
+    opacity: 0.5;
+    filter: grayscale(100%)
+  }
+</style>
