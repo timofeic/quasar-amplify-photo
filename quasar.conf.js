@@ -9,7 +9,6 @@ module.exports = function (ctx) {
     boot: [
       'axios',
       'amplify',
-      'appsync'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
