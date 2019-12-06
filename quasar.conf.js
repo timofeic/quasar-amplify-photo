@@ -64,7 +64,11 @@ module.exports = function (ctx) {
       // extractCSS: false,
 
       // https://quasar.dev/quasar-cli/cli-documentation/handling-webpack
-      extendWebpack (cfg) {
+      chainWebpack (cfg) {
+	// To fix an error in .../node_modules/...mjs 
+	// https://github.com/graphql/graphql-js/issues/1272
+	// "Can't reexport the named export ... from non EcmaScript"
+        cfg.resolve.extensions.clear().add('.mjs').add('.js').add('.json').add('.jsx');
       }
     },
 
