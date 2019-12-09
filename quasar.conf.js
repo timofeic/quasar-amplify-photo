@@ -65,10 +65,10 @@ module.exports = function (ctx) {
 
       // https://quasar.dev/quasar-cli/cli-documentation/handling-webpack
       chainWebpack (cfg) {
-	// To fix an error in .../node_modules/...mjs 
-	// https://github.com/graphql/graphql-js/issues/1272
-	// "Can't reexport the named export ... from non EcmaScript"
-        cfg.resolve.extensions.clear().add('.mjs').add('.js').add('.json').add('.jsx');
+        // To fix an error in .../node_modules/...mjs
+        // https://github.com/graphql/graphql-js/issues/1272
+        // "Can't reexport the named export ... from non EcmaScript"
+        cfg.resolve.extensions.prepend('.mjs')
       }
     },
 

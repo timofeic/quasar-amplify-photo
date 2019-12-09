@@ -16,7 +16,6 @@
         v-model="formData.email"
         label="E-mail"
         stack-label
-        :dense="dense"
         :rules="[
           val => !!val || '* Required',
           val => isValidEmailAddress(val) || 'Please enter a valid e-mail address']"
@@ -32,7 +31,6 @@
         label="Password"
         type="password"
         stack-label
-        :dense="dense"
         :rules="[
           val => !!val || '* Required',
           val => val.length >= 8 || 'Please use at least 8 characters']"
