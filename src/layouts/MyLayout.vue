@@ -93,6 +93,8 @@
 </template>
 
 <script>
+import { openURL } from 'quasar'
+
 export default {
   name: 'MyLayout',
 
@@ -102,6 +104,16 @@ export default {
       signedIn: false,
     };
   },
+  computed: {
+    isLoggedIn () {
+      return this.signedIn
+    }
+  },
+  mounted () {
+    this.$AmplifyEventBus.$on('authState', info => {
+      this.signedIn = true
+    })
+  },
   beforeCreate () {
     this.$Auth.currentAuthenticatedUser()
       .then(user => {
@@ -109,6 +121,17 @@ export default {
         this.signedIn = true
       })
       .catch(() => console.log('not signed in...'))
+  },
+  methods: {
+    openURL,
+    async signOut () {
+      await this.$Auth.signOut()
+        .then(data => console.log(data))
+        .catch(err => console.log(err))
+      this.signedIn = false
+      parent.signedIn = false
+      this.$router.push({ name: 'auth' })
+    }
   }
 };
 </script>
